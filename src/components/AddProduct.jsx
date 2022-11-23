@@ -11,7 +11,6 @@ export const AddProduct = () => {
 
     const { entities } = useSelector((state) => state.products)
     const entitiesAmount = useSelector((state) => state.products.entities.length)
-console.log('entitiesAmount :>> ', entitiesAmount);
     const [name, setName] = useState('')
     const [category, setCategory] = useState('')
     const [error, setError] = useState(null)
@@ -21,29 +20,27 @@ console.log('entitiesAmount :>> ', entitiesAmount);
 
     const onSubmitAddProduct = () => {
         if (name && category) {
-            let existProductInCategory = _.find(entities, { name: name, category: category })
+            const existProductInCategory = _.find(entities, { name: name, category: category })
 
             //create new product  ==================
             if (!existProductInCategory) {
-                let newProduct = {
+                const newProduct = {
                     id: entitiesAmount + 1,
                     name: name,
                     category: category,
                     amount: 1,
                 }
-console.log('newProduct :>> ', newProduct);
                 dispatch(productAdded(newProduct))
 
                 axiosWrappers.postAxios(URL, newProduct)
             } else {
                 //update product  ==================
-                let product = {
+                const product = {
                     id: existProductInCategory.id,
                     name: existProductInCategory.name,
                     category: existProductInCategory.category,
                     amount: existProductInCategory.amount + 1,
                 }
-                console.log('product :>> ', product);
 
                 dispatch(productUpdated(product))
 
